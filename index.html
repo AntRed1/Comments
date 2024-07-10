@@ -61,7 +61,7 @@
               <!-- Columna para el formulario de contacto -->
               <div class="col-md-8">
                 <h4>Dejar Comentarios</h4>
-                <form>
+                <form id="comentarios-Form" method="POST" action="insertar.php">
                   <!-- Nombre -->
                   <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
@@ -121,7 +121,11 @@
                   </div>
 
                   <!-- Botón de enviar -->
-                  <button onclick="Enviar()" class="btn btn-primary">
+                  <button
+                    type="button"
+                    onclick="Enviar(event)"
+                    class="btn btn-primary"
+                  >
                     Enviar Comentario
                   </button>
                 </form>
