@@ -1,37 +1,21 @@
 <?php
-$servername = "";
-$username = "";
-$password = "";
-$db_name = "";
+// Habilitar la notificación de errores
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Se crea la conexion.
-$conn = new mysqli($servername, $username, $password, $db_name);
+require 'comentarios.php';
 
-// Verificar la conexion.
-if ($conn -> connect_error) {
-	# code... valida si la conexion arroja algun error, indica un error.
-	die("Conexion fallida: " . $conn-> connect_error);
-}
+// Obtener la IP del cliente
+$ip = $_SERVER['REMOTE_ADDR'];
 
-// Obtener los datos desde el Formulario, en el Template HTML
-$nombre = $_POST['nombre'];
-$apellidos = $_POST['apellidos'];
-$email = $_POST['email'];
-$comentarios = $_POST['comentarios'];
+// Obtener los datos del formulario
+$nombre = $_POST['nombre'] ?? '';
+$apellidos = $_POST['apellidos'] ?? '';
+$email = $_POST['email'] ?? '';
+$comentarios = $_POST['comentarios'] ?? '';
 
-// Mediante un procedimiento en la Base de Datos se realizara el insert y se realiza la llamada
-$stmt = $conn->prepare("CALL InsertarComentarios(?,?,?,?)");
-$stmt->bind_param("ssss", $nombre, $apellidos, $email, $comentarios);
+error_log("Datos recibidos: Nombre=$nombre, Apellidos=$apellidos, Email=$email, Comentarios=$comentarios, IP=$ip");
 
-if ($stmt->execute()) {
-	# code... Ejecutar el Procedimiento Almacenado
-	echo "Nuevo registro creado exitosamente";
-}else{
-	echo "Error al ejecutar el procedimiento almacenado: ". $stmt->error;
-}
-
-// Cierro la conexion a la Base de Datos.
-
-$stmt->close();
-$conn->close();
+// Llamar a la función para insertar el comentario
+insertarComentario($nombre, $apellidos, $email, $comentarios, $ip);
 ?>
