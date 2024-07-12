@@ -15,8 +15,18 @@ footer {
   margin: 0;
   padding: 0;
   height: 100%;
+  display: flex;
+  flex-direction: column;
   font-family: system-ui, -apple-system, blinkmacsystemfont, "segoe ui", roboto,
     oxygen, ubuntu, cantarell, "open sans", "helvetica neue", sans-serif;
+}
+
+footer {
+  background-color: #2b303b;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: auto; /* Esto empuja el footer a la parte inferior */
 }
 
 img {
@@ -74,6 +84,10 @@ img {
 
 .btn-primary:hover {
   background-color: #0056b3;
+}
+
+#comentarios-container {
+  padding-top: 20px;
 }
 
 /* Estilos para el pie de página */
