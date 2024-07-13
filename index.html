@@ -4,7 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="Projects Comments" content="HTML, CSS, Javascript y PHP" />
+    <meta
+      name="description"
+      content="Página web para dejar comentarios sobre proyectos. Incluye HTML, CSS, JavaScript y PHP."
+    />
+    <meta
+      name="keywords"
+      content="comentarios, proyectos, HTML, CSS, JavaScript, PHP"
+    />
+    <meta name="author" content="Anthony J. Rojas Valdez" />
     <title>Comments</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="stylesheet" href="css/styles.css" />
@@ -16,236 +24,225 @@
     />
   </head>
   <body>
-    <main>
-      <article>
-        <section>
-          <div class="container">
-            <div class="row">
-              <!-- Columna para redes sociales -->
-              <div class="col-md-4 mb-4">
-                <h4>Redes Sociales</h4>
-                <hr />
-                <button
-                  class="btn btn-primary"
-                  type="button"
-                  data-bs-toggle="offcanvas"
-                  data-bs-target="#redesSocialesOffcanvas"
-                  aria-controls="redesSocialesOffcanvas"
-                >
-                  Redes Sociales
-                </button>
-
-                <div
-                  class="offcanvas offcanvas-start"
-                  data-bs-backdrop="static"
-                  tabindex="-1"
-                  id="redesSocialesOffcanvas"
-                  aria-labelledby="redesSocialesOffcanvasLabel"
-                >
-                  <div class="offcanvas-header">
-                    <h5
-                      class="offcanvas-title"
-                      id="redesSocialesOffcanvasLabel"
+    <div class="d-flex flex-column min-vh-100">
+      <main class="flex-grow-1">
+        <article>
+          <section>
+            <div class="container">
+              <div class="row">
+                <!-- Columna para redes sociales de Anthony Rojas -->
+                <div class="container col-md-4 mb-5">
+                  <h4>Redes Sociales</h4>
+                  <hr />
+                  <div class="col">
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      data-bs-toggle="offcanvas"
+                      data-bs-target="#anthonyOffcanvas"
+                      aria-controls="anthonyOffcanvas"
                     >
-                      Redes Sociales
-                    </h5>
+                      Anthony Rojas ⚡
+                    </button>
+                  </div>
+                  <div
+                    class="offcanvas offcanvas-start"
+                    data-bs-backdrop="static"
+                    tabindex="-1"
+                    id="anthonyOffcanvas"
+                    aria-labelledby="anthonyOffcanvasLabel"
+                  >
+                    <div class="offcanvas-header">
+                      <h5 class="offcanvas-title" id="anthonyOffcanvasLabel">
+                        Redes Sociales
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="offcanvas-body">
+                      <ul class="list-unstyled social-media-list">
+                        <!-- Anthony Rojas -->
+                        <li class="alert alert-dark" role="alert">
+                          <h4>
+                            Anthony Rojas
+                            <img
+                              src="https://github.com/AntRed1.png"
+                              alt="photo"
+                            />
+                          </h4>
+                          <ul class="list-unstyled">
+                            <li>
+                              <a
+                                href="mailto:anthonyatras@gmail.com"
+                                target="_blank"
+                                aria-label="Correo Electrónico"
+                              >
+                                <i class="fa-solid fa-envelope"></i>
+                                Correo
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                href="https://www.linkedin.com/in/anthony-j-rojas-v-29b26a207/"
+                                target="_blank"
+                                aria-label="LinkedIn"
+                              >
+                                <i class="fa-brands fa-linkedin"></i>
+                                LinkedIn
+                              </a>
+                            </li>
+                            <li>
+                              <a
+                                href="https://github.com/AntRed1"
+                                target="_blank"
+                                aria-label="GitHub"
+                              >
+                                <i
+                                  class="fa fa-github fs-3"
+                                  aria-hidden="true"
+                                ></i>
+                                GitHub
+                              </a>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div
+                    class="offcanvas offcanvas-start"
+                    data-bs-backdrop="static"
+                    tabindex="-1"
+                    id="arisleidyOffcanvas"
+                    aria-labelledby="arisleidyOffcanvasLabel"
+                  ></div>
+                </div>
+
+                <!-- Columna para el formulario de contacto -->
+                <div class="col-md-8">
+                  <h4>Dejar Comentarios</h4>
+                  <form id="comentarios-Form" method="POST">
+                    <!-- Nombre -->
+                    <div class="mb-3">
+                      <label for="nombre" class="form-label"> Nombre </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        name="nombre"
+                        maxlength="50"
+                        minlength="1"
+                        required
+                      />
+                    </div>
+
+                    <!-- Apellidos -->
+                    <div class="mb-3">
+                      <label for="apellidos" class="form-label">
+                        Apellidos
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="apellidos"
+                        name="apellidos"
+                        maxlength="50"
+                        minlength="1"
+                        required
+                      />
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                      <label for="email" class="form-label"> Email </label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        maxlength="50"
+                        minlength="1"
+                        required
+                      />
+                    </div>
+
+                    <!-- Comentarios -->
+                    <div class="mb-3">
+                      <label for="comentarios" class="form-label">
+                        Comentarios
+                      </label>
+                      <textarea
+                        class="form-control"
+                        id="comentarios"
+                        name="comentarios"
+                        rows="4"
+                        maxlength="100"
+                        minlength="1"
+                        required
+                      ></textarea>
+                    </div>
+
+                    <!-- Botón de enviar -->
                     <button
                       type="button"
-                      class="btn-close"
-                      data-bs-dismiss="offcanvas"
-                      aria-label="Close"
-                    ></button>
+                      onclick="Enviar(event)"
+                      class="btn btn-primary"
+                    >
+                      Enviar Comentario
+                    </button>
+                  </form>
+
+                  <!-- Badge para la cantidad de comentarios -->
+                  <div class="mt-4">
+                    <button
+                      id="btnCargarComentarios"
+                      type="button"
+                      class="btn btn-primary position-relative"
+                    >
+                      Comentarios
+                      <span
+                        id="commentBadge"
+                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                      >
+                        0
+                        <span class="visually-hidden"> comentarios </span>
+                      </span>
+                    </button>
                   </div>
-                  <div class="offcanvas-body">
-                    <ul class="list-unstyled social-media-list">
-                      <!-- Anthony Rojas -->
-                      <li>
-                        <h4>
-                          Anthony Rojas
-                          <img
-                            src="https://github.com/AntRed1.png"
-                            alt="photo"
-                          />
-                        </h4>
-                        <ul class="list-unstyled">
-                          <li>
-                            <a
-                              href="mailto:anthonyatras@gmail.com"
-                              target="_blank"
-                              aria-label="Correo Electrónico"
-                            >
-                              <i class="fa-solid fa-envelope"></i> Correo
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="https://www.linkedin.com/in/anthony-j-rojas-v-29b26a207/"
-                              target="_blank"
-                              aria-label="LinkedIn"
-                            >
-                              <i class="fa-brands fa-linkedin"></i> LinkedIn
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="https://github.com/AntRed1"
-                              target="_blank"
-                              aria-label="GitHub"
-                            >
-                              <i
-                                class="fa fa-github fs-3"
-                                aria-hidden="true"
-                              ></i>
-                              GitHub
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-                      <!-- Otras personas -->
-                      <!-- Aquí añade los enlaces y detalles de las otras personas -->
-                      <!-- Ejemplo: -->
-                      <!-- <li>
-                        <h4>
-                          Nombre Persona
-                          <img src="URL_foto.png" alt="photo" />
-                        </h4>
-                        <ul class="list-unstyled">
-                          <li>
-                            <a
-                              href="mailto:correo@persona.com"
-                              target="_blank"
-                              aria-label="Correo Electrónico"
-                            >
-                              <i class="fa-solid fa-envelope"></i> Correo
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="https://www.linkedin.com/in/perfil-persona/"
-                              target="_blank"
-                              aria-label="LinkedIn"
-                            >
-                              <i class="fa-brands fa-linkedin"></i> LinkedIn
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="https://github.com/usuario"
-                              target="_blank"
-                              aria-label="GitHub"
-                            >
-                              <i class="fa fa-github fs-3" aria-hidden="true"></i>
-                              GitHub
-                            </a>
-                          </li>
-                        </ul>
-                      </li> -->
-                    </ul>
-                  </div>
+
+                  <!-- Contenedor para los comentarios -->
+                  <div id="comentariosContainer" class="mt-4"></div>
                 </div>
               </div>
-
-              <!-- Columna para el formulario de contacto -->
-              <div class="col-md-8">
-                <h4>Dejar Comentarios</h4>
-                <form
-                  id="comentarios-Form"
-                  method="POST"
-                  action="php/insertar.php"
-                >
-                  <!-- Nombre -->
-                  <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="nombre"
-                      name="nombre"
-                      maxlength="50"
-                      minlength="1"
-                      required
-                    />
-                  </div>
-
-                  <!-- Apellidos -->
-                  <div class="mb-3">
-                    <label for="apellidos" class="form-label">Apellidos</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="apellidos"
-                      name="apellidos"
-                      maxlength="50"
-                      minlength="1"
-                      required
-                    />
-                  </div>
-
-                  <!-- Email -->
-                  <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="email"
-                      name="email"
-                      maxlength="50"
-                      minlength="1"
-                      required
-                    />
-                  </div>
-
-                  <!-- Comentarios -->
-                  <div class="mb-3">
-                    <label for="comentarios" class="form-label"
-                      >Comentarios</label
-                    >
-                    <textarea
-                      class="form-control"
-                      id="comentarios"
-                      name="comentarios"
-                      rows="4"
-                      maxlength="100"
-                      minlength="1"
-                      required
-                    ></textarea>
-                  </div>
-
-                  <!-- Botón de enviar -->
-                  <button
-                    type="button"
-                    onclick="Enviar(event)"
-                    class="btn btn-primary"
-                  >
-                    Enviar Comentario
-                  </button>
-                </form>
-              </div>
             </div>
+          </section>
+        </article>
+      </main>
+      <!-- Footer de la Página -->
+      <footer id="pie-pagina" class="text-white py-3">
+        <div class="col table-responsive">
+          <div class="container-fluid text-center">
+            <cite title="Source title">
+              <p class="lead m-0 copy-right">
+                <strong>
+                  Copyright &copy; 2024 All rights reserved | Anthony J. Rojas
+                  Valdez.
+                </strong>
+                <a href="https://github.com/AntRed1">
+                  <i class="fa fa-github fs-3" aria-hidden="true"></i>
+                </a>
+              </p>
+            </cite>
           </div>
-        </section>
-      </article>
-    </main>
-
-    <!-- !! Footer de la Página -->
-    <footer id="pie-pagina" class="text-white py-3">
-      <div class="col-lg-12 table-responsive">
-        <div class="container-fluid text-center shadow">
-          <cite title="Source title">
-            <p class="lead m-0 copy-right">
-              <strong
-                >Copyright &copy; 2024 All rights reserved | Anthony J. Rojas
-                Valdez.</strong
-              >
-              <a href="https://github.com/AntRed1"
-                ><i class="fa fa-github fs-3" aria-hidden="true"></i
-              ></a>
-            </p>
-          </cite>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
 
+    <!-- JavaScripts -->
     <script src="js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script
@@ -258,18 +255,10 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <!-- ! CDN Fontawesome -->
-    <script
-      class="imagenes"
-      src="https://kit.fontawesome.com/1ae4b6ae42.js"
-      crossorigin="anonymous"
-    ></script>
     <!-- Font Awesome -->
     <script
-      class="imagenes"
       src="https://kit.fontawesome.com/1ae4b6ae42.js"
       crossorigin="anonymous"
     ></script>
-    <!--! CDN Fontawesome -->
   </body>
 </html>

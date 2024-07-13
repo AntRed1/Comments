@@ -2,7 +2,7 @@
 
 // Properties de la Base de Datos.
 
-$servername = "10.0.0.14";
+$servername = "arojas252000.duckdns.org:6486";
 $username = "root";
 $password = "@Emulador1";
 $db_name = "comments";
