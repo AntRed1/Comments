@@ -1,6 +1,26 @@
-// Función para cargar los comentarios existentes
-function cargarComentarios() {
-  // Mostrar SweetAlert de carga con el spinner de Bootstrap
+// Función para mostrar mensaje de SweetAlert
+function mostrarMensaje(title, text, icon = "info") {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: icon,
+    confirmButtonText: "OK",
+  });
+}
+
+// Función para manejar errores de red o servidor
+function manejarError(error) {
+  console.error("Error:", error);
+  mostrarMensaje(
+    "Error",
+    "Hubo un problema con la solicitud. Por favor, inténtelo de nuevo más tarde.",
+    "error"
+  );
+}
+
+// Función para cargar comentarios con paginación
+function cargarComentarios(page = 1, limit = 10) {
+  // Mostrar SweetAlert de carga
   Swal.fire({
     title: "Cargando comentarios...",
     html: '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="visually-hidden">Cargando...</span>',
@@ -8,8 +28,13 @@ function cargarComentarios() {
     showConfirmButton: false,
   });
 
-  fetch("php/comentarios.php")
-    .then((response) => response.json())
+  fetch(`php/comentarios.php?page=${page}&limit=${limit}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then((data) => {
       const comentariosContainer = document.getElementById(
         "comentariosContainer"
@@ -26,56 +51,36 @@ function cargarComentarios() {
         comentariosContainer.innerHTML += comentarioHTML;
       });
 
-      // Actualizar el badge con la cantidad de comentarios
+      // Actualizar badge con cantidad de comentarios
       const commentBadge = document.getElementById("commentBadge");
       commentBadge.innerText = data.length;
 
-      // Cerrar SweetAlert después de cargar los comentarios
+      // Cerrar SweetAlert después de cargar comentarios
       Swal.close();
     })
-    .catch((error) => {
-      console.error("Error al cargar los comentarios:", error);
-      // Mostrar mensaje de error con SweetAlert
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Hubo un error al cargar los comentarios. Por favor, inténtelo de nuevo más tarde.",
-      });
+    .catch(manejarError);
+}
+
+// Refactorización del envío de comentarios utilizando async/await
+async function enviarComentario(formData) {
+  try {
+    const response = await fetch("php/comentarios.php", {
+      method: "POST",
+      body: formData,
     });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    manejarError(error);
+  }
 }
 
-// Obtener referencia al botón de comentarios
-const btnCargarComentarios = document.getElementById("btnCargarComentarios");
-
-// Agregar listener al botón para cargar comentarios al hacer clic
-btnCargarComentarios.addEventListener("click", () => {
-  cargarComentarios();
-});
-
-// Función para validar campos
-function validarCampos(nombre, apellidos, email, comentarios) {
-  // Validar formato de correo electrónico
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return (
-    nombre.trim() !== "" &&
-    apellidos.trim() !== "" &&
-    email.trim() !== "" &&
-    comentarios.trim() !== "" &&
-    emailRegex.test(email)
-  );
-}
-
-// Función para limpiar los campos del formulario después de enviar
-function limpiarCampos() {
-  document.getElementById("nombre").value = "";
-  document.getElementById("apellidos").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("comentarios").value = "";
-}
-
-// Función para enviar comentarios
-function Enviar(event) {
-  event.preventDefault(); // Prevenir que el formulario se envíe por default.
+// Actualización de Enviar(event) para utilizar async/await
+async function Enviar(event) {
+  event.preventDefault(); // Prevenir envío por default
 
   const nombre = document.getElementById("nombre").value.trim();
   const apellidos = document.getElementById("apellidos").value.trim();
@@ -83,64 +88,57 @@ function Enviar(event) {
   const comentarios = document.getElementById("comentarios").value.trim();
 
   if (!validarCampos(nombre, apellidos, email, comentarios)) {
-    Swal.fire({
-      icon: "error",
-      title: "Existen Campos vacíos",
-      text: "Por favor, complete todos los campos correctamente.",
-    });
-  } else {
-    Swal.fire({
-      title: "Desea guardar los cambios?",
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: "Guardar",
-      denyButtonText: `No Guardar`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const formData = new FormData();
-        formData.append("nombre", nombre);
-        formData.append("apellidos", apellidos);
-        formData.append("email", email);
-        formData.append("comentarios", comentarios);
+    mostrarMensaje(
+      "Existen Campos Vacíos",
+      "Por favor, complete todos los campos correctamente.",
+      "error"
+    );
+    return;
+  }
 
-        fetch("php/comentarios.php", {
-          method: "POST",
-          body: formData,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.success) {
-              limpiarCampos();
-              cargarComentarios();
-              Swal.fire({
-                title: "Guardado!",
-                text: "El comentario se ha guardado correctamente.",
-                icon: "success",
-                confirmButtonText: "OK",
-              });
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Error",
-                text: "No se pudo guardar el comentario. " + data.message,
-              });
-            }
-          })
-          .catch((error) => {
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "Hubo un problema con la solicitud. " + error,
-            });
-          });
-      } else if (result.isDenied) {
-        Swal.fire("Los cambios no fueron guardados", "", "info");
-      }
-    });
+  const result = await Swal.fire({
+    title: "Desea guardar los cambios?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Guardar",
+    denyButtonText: `No Guardar`,
+  });
+
+  if (result.isConfirmed) {
+    const formData = new FormData();
+    formData.append("nombre", nombre);
+    formData.append("apellidos", apellidos);
+    formData.append("email", email);
+    formData.append("comentarios", comentarios);
+
+    const data = await enviarComentario(formData);
+    if (data.success) {
+      limpiarCampos();
+      cargarComentarios();
+      mostrarMensaje(
+        "Guardado",
+        "El comentario se ha guardado correctamente.",
+        "success"
+      );
+    } else {
+      mostrarMensaje(
+        "Error",
+        `No se pudo guardar el comentario. ${data.message}`,
+        "error"
+      );
+    }
+  } else if (result.isDenied) {
+    mostrarMensaje("Cancelado", "Los cambios no fueron guardados.", "info");
   }
 }
 
-// Llamar a cargarComentarios al cargar la página (opcional, si lo quieres cargar automáticamente)
+// Listener para el botón de cargar comentarios
+const btnCargarComentarios = document.getElementById("btnCargarComentarios");
+btnCargarComentarios.addEventListener("click", () => {
+  cargarComentarios();
+});
+
+// Cargar comentarios automáticamente al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
-  // cargarComentarios();
+  cargarComentarios();
 });

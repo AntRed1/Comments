@@ -6,21 +6,25 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Función para insertar un comentario
+// Función para insertar un comentario
 function insertarComentario($nombre, $apellidos, $email, $comentarios, $ip) {
     $conn = conectarBaseDatos();
     $stmt = $conn->prepare("CALL InsertarComentario(?, ?, ?, ?, ?)");
     if ($stmt === false) {
-        error_log("Error al preparar el procedimiento almacenado para insertar: " . $conn->error);
+        $error_msg = "Error al preparar el procedimiento almacenado para insertar: " . $conn->error;
+        error_log($error_msg); // Log de error
         http_response_code(500);
-        echo json_encode(array("success" => false, "message" => "Error al preparar el procedimiento almacenado para insertar: " . $conn->error));
+        echo json_encode(array("success" => false, "message" => $error_msg));
         exit;
     }
     $stmt->bind_param("sssss", $nombre, $apellidos, $email, $comentarios, $ip);
     if ($stmt->execute()) {
         echo json_encode(array("success" => true, "message" => "Nuevo registro creado exitosamente"));
     } else {
+        $error_msg = "Error al ejecutar el procedimiento almacenado para insertar: " . $stmt->error;
+        error_log($error_msg); // Log de error
         http_response_code(500);
-        echo json_encode(array("success" => false, "message" => "Error al ejecutar el procedimiento almacenado para insertar: " . $stmt->error));
+        echo json_encode(array("success" => false, "message" => $error_msg));
     }
     $stmt->close();
     $conn->close();
@@ -31,9 +35,10 @@ function obtenerComentarios() {
     $conn = conectarBaseDatos();
     $stmt = $conn->prepare("CALL ObtenerComentarios()");
     if ($stmt === false) {
-        error_log("Error al preparar el procedimiento almacenado para obtener comentarios: " . $conn->error);
+        $error_msg = "Error al preparar el procedimiento almacenado para obtener comentarios: " . $conn->error;
+        error_log($error_msg); // Log de error
         http_response_code(500);
-        echo json_encode(array("message" => "Error al preparar el procedimiento almacenado para obtener comentarios: " . $conn->error));
+        echo json_encode(array("message" => $error_msg));
         exit;
     }
     if ($stmt->execute()) {
@@ -41,13 +46,16 @@ function obtenerComentarios() {
         $comentarios = $result->fetch_all(MYSQLI_ASSOC);
         return $comentarios; // Devolver los comentarios como un arreglo asociativo
     } else {
+        $error_msg = "Error al ejecutar el procedimiento almacenado para obtener comentarios: " . $stmt->error;
+        error_log($error_msg); // Log de error
         http_response_code(500);
-        echo json_encode(array("message" => "Error al ejecutar el procedimiento almacenado para obtener comentarios: " . $stmt->error));
+        echo json_encode(array("message" => $error_msg));
         exit;
     }
     $stmt->close();
     $conn->close();
 }
+
 
 // Manejo de solicitudes
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
