@@ -3,30 +3,32 @@
   color-scheme: light dark;
 }
 
-body,
-html,
-header,
-main,
-aside,
-section,
-footer {
-  color: light-dark(#333b3c, #efefec);
-  background-color: light-dark(#efedea, #2b303b);
-  margin: 0;
-  padding: 0;
-  height: 100%;
+body {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: system-ui, -apple-system, blinkmacsystemfont, "segoe ui", roboto,
-    oxygen, ubuntu, cantarell, "open sans", "helvetica neue", sans-serif;
+  background-color: #2b303b;
+  color: #fff;
+}
+
+main {
+  flex-grow: 1;
+  background-color: #2b303b;
+  color: #fff;
 }
 
 footer {
-  background-color: #2b303b;
-  color: #fff;
+  background-color: #000;
   text-align: center;
-  padding: 20px 0;
-  margin-top: auto; /* Esto empuja el footer a la parte inferior */
+}
+
+footer .lead {
+  margin: 0;
+  font-weight: 600;
+}
+
+footer a {
+  color: #fff;
 }
 
 img {
@@ -50,7 +52,7 @@ img {
 
 .social-media-list ul li a {
   text-decoration: none;
-  color: #333;
+  color: #171c19;
 }
 
 .social-media-list ul li a:hover {
@@ -61,7 +63,6 @@ img {
   margin-bottom: 20px;
 }
 
-/* Estilos para el formulario */
 .form-control {
   border: 1px solid #ccc;
   padding: 8px;
@@ -73,7 +74,6 @@ img {
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-/* Estilos para botones */
 .btn-primary {
   background-color: #007bff;
   color: #fff;
@@ -90,13 +90,11 @@ img {
   padding-top: 20px;
 }
 
-/* Estilos para el pie de página */
 #pie-pagina {
-  margin: 0;
-  padding: 20px 0; /* Ajusta según sea necesario */
   background-color: #2b303b;
   color: #fff;
   text-align: center;
+  padding: 20px 0;
 }
 
 .copy-right {
