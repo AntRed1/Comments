@@ -58,10 +58,6 @@ function actualizarComentariosUI(data) {
     `;
     comentariosContainer.innerHTML += comentarioHTML;
   });
-
-  // Actualizar badge con cantidad de comentarios
-  const commentBadge = document.getElementById("commentBadge");
-  commentBadge.innerText = data.length;
 }
 
 // Función para validar campos del formulario
@@ -140,12 +136,13 @@ async function Enviar(event) {
     const data = await enviarComentario(formData);
     if (data.success) {
       limpiarCampos();
-      cargarComentarios();
       mostrarMensaje(
         "Guardado",
         "El comentario se ha guardado correctamente.",
         "success"
       );
+      // Recargar comentarios después de guardar
+      actualizarBadge();
     } else {
       mostrarMensaje(
         "Error",
@@ -158,12 +155,35 @@ async function Enviar(event) {
   }
 }
 
-// Listener para el botón de cargar comentarios
-const btnCargarComentarios = document.getElementById("btnCargarComentarios");
-btnCargarComentarios.addEventListener("click", cargarComentarios);
+// Función para actualizar el badge con la cantidad de comentarios
+async function actualizarBadge() {
+  try {
+    const response = await fetch("php/comentarios.php");
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
 
-// Cargar comentarios automáticamente al cargar la página
+    const data = await response.json();
+    const commentBadge = document.getElementById("commentBadge");
+    commentBadge.innerText = data.length;
+  } catch (error) {
+    manejarError(error);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Comentar la siguiente línea si deseas cargar comentarios automáticamente al cargar la página
-  // cargarComentarios();
+  // Listener para el botón de cargar comentarios
+  const btnCargarComentarios = document.getElementById("btnCargarComentarios");
+  if (btnCargarComentarios) {
+    btnCargarComentarios.addEventListener("click", cargarComentarios);
+  }
+
+  // Listener para el envío del formulario
+  const formulario = document.getElementById("formularioComentario");
+  if (formulario) {
+    formulario.addEventListener("submit", Enviar);
+  }
+
+  // Actualizar el badge al cargar la página
+  actualizarBadge();
 });
