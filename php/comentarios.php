@@ -6,7 +6,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Función para insertar un comentario
-// Función para insertar un comentario
 function insertarComentario($nombre, $apellidos, $email, $comentarios, $ip) {
     $conn = conectarBaseDatos();
     $stmt = $conn->prepare("CALL InsertarComentario(?, ?, ?, ?, ?)");
@@ -56,7 +55,6 @@ function obtenerComentarios() {
     $conn->close();
 }
 
-
 // Manejo de solicitudes
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Obtener la IP del cliente
@@ -67,6 +65,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $apellidos = $_POST['apellidos'] ?? '';
     $email = $_POST['email'] ?? '';
     $comentarios = $_POST['comentarios'] ?? '';
+
+    // Log para mostrar los datos recibidos del formulario en el servidor
+    error_log("Datos recibidos del formulario:");
+    error_log("Nombre: " . $nombre);
+    error_log("Apellidos: " . $apellidos);
+    error_log("Email: " . $email);
+    error_log("Comentarios: " . $comentarios);
 
     // Validar los datos del formulario
     if (empty($nombre) || empty($apellidos) || empty($email) || empty($comentarios)) {
@@ -79,10 +84,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     insertarComentario($nombre, $apellidos, $email, $comentarios, $ip);
 
 } elseif ($_SERVER["REQUEST_METHOD"] === "GET") {
+    // Obtener comentarios si es una solicitud GET
     header("Content-Type: application/json");
     echo json_encode(obtenerComentarios());
 
 } else {
+    // Manejar métodos no permitidos
     http_response_code(405); // Método no permitido
     echo json_encode(array("message" => "Método no permitido"));
 }
