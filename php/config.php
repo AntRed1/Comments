@@ -2,9 +2,9 @@
 
 // Properties de la Base de Datos.
 
-$servername = "arojas252000.duckdns.org:6486";
-$username = "root";
+$servername = "springedgero.duckdns.org:6436";
+$username = "arojas";
 $password = "@Emulador1";
-$db_name = "comments";
+$db_name = "sistema_comentarios";
 
 ?>
